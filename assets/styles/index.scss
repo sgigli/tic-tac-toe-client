@@ -1,1 +1,19 @@
 @import '~bootstrap/scss/bootstrap';
+
+body {
+  text-align: center;
+}
+
+.container {
+  //width: 700px;
+  border: 0;
+}
+
+div {
+  background-color: green;
+  border: 2px black solid;
+}
+
+.col-sm {
+  padding: 80px;
+}
