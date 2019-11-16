@@ -18,6 +18,7 @@ const checkWin = threeInARow => {
   )
 }
 
+// This is game information
 let cells = 9
 let currentPlayer = 'X'
 $('#currentPlayer').text('X')
