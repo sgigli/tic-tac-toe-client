@@ -1,4 +1,8 @@
 'use strict'
+
+const api = require('./api')
+const ui = require('./ui')
+
 const threeInARow = {
   row1: [$('#0'), $('#1'), $('#2')],
   row2: [$('#3'), $('#4'), $('#5')],
@@ -18,33 +22,88 @@ const checkWin = threeInARow => {
   )
 }
 
+const spaceIsEmpty = event => {
+  return !$(event.target).html()
+}
+
+const updateUserMessage = message => {
+  $('#message').text(message)
+}
+
+const insertLetter = event => {
+  $(event.target).html(currentPlayer)
+}
+
+const oneLessBox = () => {
+  cells--
+}
+
+const gridIsEmpty = () => {
+  if (cells === 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+const dontAllowMoreLetters = () => {
+  $('.col-sm').off('click', addLetter)
+  over = true
+}
+
+const updateCurrentPlayer = () => {
+  currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
+}
+
+const updateCurrentPlayerMessage = () => {
+  $('#currentPlayer').text(currentPlayer)
+}
+
 // This is game information
 let cells = 9
 let currentPlayer = 'X'
 $('#currentPlayer').text('X')
+let over = false
 
 const addLetter = event => {
-  if (!$(event.target).html()) {
-    $('#message').text('')
-    $(event.target).html(currentPlayer)
-    cells--
+  if (spaceIsEmpty(event)) {
+    updateUserMessage('')
+    insertLetter(event)
+    api.addLetter(event.target.id, currentPlayer.toLowerCase(), over)
+      .then(ui.onAddLetterSuccess)
+      .catch(ui.onAddLetterFailure)
+    oneLessBox()
     if (checkWin(threeInARow)) {
-      $('#message').text(currentPlayer + ' wins!')
-      $('.col-sm').off('click', addLetter)
-    } else if (cells === 0) {
-      $('#message').text('It is a tie!')
-      $('.col-sm').off('click', addLetter)
+      updateUserMessage(currentPlayer + ' wins!')
+      dontAllowMoreLetters()
+    } else if (gridIsEmpty()) {
+      updateUserMessage('It is a tie!')
+      dontAllowMoreLetters()
     } else {
-      currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
-      $('#currentPlayer').text(currentPlayer)
+      updateCurrentPlayer()
+      updateCurrentPlayerMessage()
     }
   } else {
-    $('#message').text('Please select another space')
+    updateUserMessage('Please select another space')
   }
 }
 
-const addHandlers = () => {
+const createGame = () => {
   $('.col-sm').on('click', addLetter)
+  api.create()
+    .then(ui.onCreateSuccess)
+    .catch(ui.onCreateFailure)
+}
+
+const getGames = () => {
+  api.getGames()
+    .then(ui.onGetGamesSuccess)
+    .catch(ui.onGetGamesFailure)
+}
+
+const addHandlers = () => {
+  $('#play').on('click', createGame)
+  $('#getGames').on('click', getGames)
 }
 
 module.exports = {
