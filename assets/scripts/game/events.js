@@ -27,7 +27,7 @@ const spaceIsEmpty = event => {
 }
 
 const updateUserMessage = message => {
-  $('#message').text(message)
+  $('#upper-left').text(message)
 }
 
 const insertLetter = event => {
@@ -67,7 +67,7 @@ const addLetterToApi = (id, currentPlayer, over) => {
 
 const addLetter = event => {
   if (spaceIsEmpty(event)) {
-    updateUserMessage('')
+    updateUserMessage(' ')
     insertLetter(event)
     if (checkWin(cells)) {
       updateUserMessage(currentPlayer + ' wins!')
@@ -127,6 +127,8 @@ const resetGame = () => {
   $('.col-sm').html('')
   cells = ['', '', '', '', '', '', '', '', '']
   currentPlayer = 'X'
+  over = false
+  updateCurrentPlayerMessage()
   createGame()
 }
 

@@ -14,8 +14,9 @@
 </head>
 
 <body>
-  <h2 id=message></h2>
   <section class="before-auth">
+    <h1>Tic Tac Toe</h1>
+    <h2 id="message">---</h2>
     <h2>Sign Up</h2>
     <form id="sign-up">
       <input name="credentials[email]" type="text" placeholder="email">
@@ -32,17 +33,24 @@
   </section>
 
   <section class="after-auth">
-    <h2>Change Password</h2>
-    <form id="change-password">
-      <input type="password" name="passwords[old]" placeholder="old password">
-      <input type="password" name="passwords[new]" placeholder="new password">
-      <button class="btn btn-primary">Submit</button>
-    </form>
-    <h2>Sign Out</h2>
-    <form id="sign-out">
-      <button class="btn btn-primary">Sign Out</button>
-    </form>
-    <h1>Current Player: <span id="currentPlayer"></span></h1>
+    <header>
+      <section id="upper-right">
+        <span id="upper-left"> </span>
+        <span>Change Password</span>
+        <form id="change-password">
+          <input type="password" name="passwords[old]" placeholder="old password">
+          <input type="password" name="passwords[new]" placeholder="new password">
+          <button class="btn btn-primary">Submit</button>
+        </form>
+        <form id="sign-out">
+          <button class="btn btn-primary">Sign Out</button>
+        </form>
+      </section>
+    </header>
+    <span id="currentPlayerHeading">Current Player: <span id="currentPlayer"></span></span>
+    <button id="play">Play</button>
+    <button id="getGames">Get Games</button>
+    <button id="reset">Reset</button>
     <div class=container>
       <div class="row">
         <div class="col-sm" id="0"></div>
@@ -60,10 +68,6 @@
         <div class="col-sm" id="8"></div>
       </div>
     </div>
-
-    <button id="play">Play</button>
-    <button id="getGames">Get Games</button>
-    <button id="reset">Reset</button>
   </section>
 
 

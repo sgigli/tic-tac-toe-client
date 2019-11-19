@@ -2,22 +2,61 @@
 
 body {
   text-align: center;
+  background-color: lightblue;
 }
 
 .container {
-  //width: 700px;
+  width: 600px;
   border: 0;
 }
 
 div {
   background-color: green;
   border: 2px black solid;
-}
-
-.col-sm {
-  padding: 80px;
+  line-height: 190px;
+  height: 190px;
+  font-size: 85px;
 }
 
 .after-auth {
   display: none;
+}
+
+.before-auth {
+  margin: 250px;
+}
+
+button {
+  margin: 20px 0;
+}
+
+span {
+  font-size: 20px;
+}
+
+form {
+  margin: -10px 0;
+  display: inline-block;
+}
+
+#upper-right {
+  text-align: right;
+}
+
+#currentPlayerHeading {
+  margin: 20px 40px;
+  font-size: 20px;
+}
+
+#message {
+  display: inline-block;
+}
+
+#upper-left {
+  margin-right: 150px;
+  font-size: 30px;
+}
+
+#sign-out {
+  margin: 0 20px 0 40px;
 }
