@@ -88,7 +88,7 @@ const addLetter = event => {
 }
 
 const createGame = () => {
-  updateUserMessage('')
+  updateUserMessage('New game!')
   $('.col-sm').on('click', addLetter)
   api.create()
     .then(ui.onCreateSuccess)
@@ -112,6 +112,7 @@ const showRecord = games => {
     }
   })
   console.log(wins, losses, ties)
+  updateUserMessage(`Wins: ${wins} -- Losses: ${losses} -- Ties: ${ties}`)
 }
 
 const getGames = () => {
@@ -122,6 +123,7 @@ const getGames = () => {
 }
 
 const resetGame = () => {
+  updateUserMessage('New game!')
   $('.col-sm').html('')
   cells = ['', '', '', '', '', '', '', '', '']
   currentPlayer = 'X'
