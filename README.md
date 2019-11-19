@@ -1,4 +1,4 @@
-Technologies used: GIT, GitHub, Bootstrap, local APIs
+## Technologies used: GIT, GitHub, Bootstrap, local APIs
 
 Planning and execution: To start, I wrote down user stories and drew a wireframe
 of the site, wanting to make it clear and coherent. I planned out the game logic
@@ -11,9 +11,9 @@ responses in places that best fit with the game logic.
 
 Unsolved problems: How to register incomplete games
 
-Wireframe: https://imgur.com/a/QCCycoz
+## Wireframe: https://imgur.com/a/QCCycoz
 
-User Story:
+## User Story:
 As unregistered user, I would ike to sign up with email, pw, and pwc:
   -if email is taken then show error message
   -if pw and pwc dont match then show error message
@@ -29,4 +29,4 @@ As a logged in user, I want to play tic tac toe:
   -player should not be able to select a taken spot
   -want to be notified after clicks
   -want to be able to see a record of my games
-  -want to be able to reset the game 
+  -want to be able to reset the game
