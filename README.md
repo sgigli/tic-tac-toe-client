@@ -29,4 +29,4 @@ As a logged in user, I want to play tic tac toe:
   -player should not be able to select a taken spot
   -want to be notified after clicks
   -want to be able to see a record of my games
-  -want to be able to reset the game
+  -want to be able to reset the game 
