@@ -3,11 +3,11 @@
 const store = require('../store')
 
 const onSuccess = message => {
-  $('#signMessage').text(message)
+  $('#message').text(message)
 }
 
 const onFailure = message => {
-  $('#signMessage').text(message)
+  $('#message').text(message)
 }
 
 const onSignUpSuccess = () => {
@@ -22,6 +22,8 @@ const onSignInSuccess = responseData => {
   store.user = responseData.user
   console.log(store)
   onSuccess('You successfully signed in!')
+  $('.after-auth').show()
+  $('.before-auth').hide()
 }
 
 const onSignInFailure = () => {
@@ -31,6 +33,8 @@ const onSignInFailure = () => {
 const onSignOutSuccess = () => {
   store.user = {}
   onSuccess('You successfully signed out!')
+  $('.before-auth').show()
+  $('.after-auth').hide()
 }
 
 const onSignOutFailure = () => {

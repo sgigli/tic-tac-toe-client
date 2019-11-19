@@ -4,21 +4,21 @@ const api = require('./api')
 const ui = require('./ui')
 
 const threeInARow = {
-  row1: [$('#0'), $('#1'), $('#2')],
-  row2: [$('#3'), $('#4'), $('#5')],
-  row3: [$('#6'), $('#7'), $('#8')],
-  col1: [$('#0'), $('#3'), $('#6')],
-  col2: [$('#1'), $('#4'), $('#7')],
-  col3: [$('#2'), $('#5'), $('#8')],
-  dia1: [$('#0'), $('#4'), $('#8')],
-  dia2: [$('#2'), $('#4'), $('#6')]
+  row1: [0, 1, 2],
+  row2: [3, 4, 5],
+  row3: [6, 7, 8],
+  col1: [0, 3, 6],
+  col2: [1, 4, 7],
+  col3: [2, 5, 8],
+  dia1: [0, 4, 8],
+  dia2: [2, 4, 6]
 }
 
-const checkWin = threeInARow => {
+const checkWin = (cells) => {
   return Object.keys(threeInARow).find(e =>
-    threeInARow[e][0].html() &&
-    threeInARow[e][0].html() === threeInARow[e][1].html() &&
-    threeInARow[e][1].html() === threeInARow[e][2].html()
+    cells[threeInARow[e][0]] &&
+    cells[threeInARow[e][0]] === cells[threeInARow[e][1]] &&
+    cells[threeInARow[e][1]] === cells[threeInARow[e][2]]
   )
 }
 
@@ -32,22 +32,16 @@ const updateUserMessage = message => {
 
 const insertLetter = event => {
   $(event.target).html(currentPlayer)
-}
-
-const oneLessBox = () => {
-  cells--
+  cells[event.target.id] = currentPlayer
 }
 
 const gridIsEmpty = () => {
-  if (cells === 0) {
-    return true
-  } else {
-    return false
-  }
+  return cells.indexOf('') !== -1 ? false : true
 }
 
 const dontAllowMoreLetters = () => {
   $('.col-sm').off('click', addLetter)
+  $('#play').off('click', createGame)
   over = true
 }
 
@@ -60,26 +54,31 @@ const updateCurrentPlayerMessage = () => {
 }
 
 // This is game information
-let cells = 9
+let cells = ['', '', '', '', '', '', '', '', '']
 let currentPlayer = 'X'
 $('#currentPlayer').text('X')
 let over = false
+
+const addLetterToApi = (id, currentPlayer, over) => {
+  api.addLetter(id, currentPlayer, over)
+    .then(ui.onAddLetterSuccess)
+    .catch(ui.onAddLetterFailure)
+}
 
 const addLetter = event => {
   if (spaceIsEmpty(event)) {
     updateUserMessage('')
     insertLetter(event)
-    api.addLetter(event.target.id, currentPlayer.toLowerCase(), over)
-      .then(ui.onAddLetterSuccess)
-      .catch(ui.onAddLetterFailure)
-    oneLessBox()
-    if (checkWin(threeInARow)) {
+    if (checkWin(cells)) {
       updateUserMessage(currentPlayer + ' wins!')
       dontAllowMoreLetters()
+      addLetterToApi(event.target.id, currentPlayer.toLowerCase(), over)
     } else if (gridIsEmpty()) {
       updateUserMessage('It is a tie!')
       dontAllowMoreLetters()
+      addLetterToApi(event.target.id, currentPlayer.toLowerCase(), over)
     } else {
+      addLetterToApi(event.target.id, currentPlayer.toLowerCase(), over)
       updateCurrentPlayer()
       updateCurrentPlayerMessage()
     }
@@ -89,21 +88,50 @@ const addLetter = event => {
 }
 
 const createGame = () => {
+  updateUserMessage('')
   $('.col-sm').on('click', addLetter)
   api.create()
     .then(ui.onCreateSuccess)
     .catch(ui.onCreateFailure)
 }
 
+const showRecord = games => {
+  let wins = 0
+  let losses = 0
+  let ties = 0
+  games.games.forEach(function (ele) {
+    if (checkWin(ele.cells)) {
+      console.log(ele.cells[threeInARow[checkWin(ele.cells)][0]])
+      if (ele.cells[threeInARow[checkWin(ele.cells)][0]] === 'x') {
+        wins++
+      } else if (ele.cells[threeInARow[checkWin(ele.cells)][0]] === 'o') {
+        losses++
+      }
+    } else {
+      ties++
+    }
+  })
+  console.log(wins, losses, ties)
+}
+
 const getGames = () => {
   api.getGames()
-    .then(ui.onGetGamesSuccess)
+    .then(showRecord)
+    .then(ui.onGetGamesSuccess) // responseData is not getting to onGetGamesSuccess ??
     .catch(ui.onGetGamesFailure)
+}
+
+const resetGame = () => {
+  $('.col-sm').html('')
+  cells = ['', '', '', '', '', '', '', '', '']
+  currentPlayer = 'X'
+  createGame()
 }
 
 const addHandlers = () => {
   $('#play').on('click', createGame)
   $('#getGames').on('click', getGames)
+  $('#reset').on('click', resetGame)
 }
 
 module.exports = {
