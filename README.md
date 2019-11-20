@@ -13,7 +13,7 @@ responses in places that best fit with the game logic.
 
 ## Unsolved problems
 - How to register incomplete games
-- How to sign in, after signing out mid-game, and have the game re-started
+- Having the game restart when the user signs out 
 - Implementing more engaging styling
 - Making more responsive to window re-sizing
 
