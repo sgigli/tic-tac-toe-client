@@ -67,7 +67,6 @@ const addLetterToApi = (id, currentPlayer, over) => {
 }
 
 const addLetter = event => {
-  console.log(cells)
   if (spaceIsEmpty(event)) {
     updateUserMessage(' ')
     insertLetter(event)
@@ -103,7 +102,6 @@ const showRecord = games => {
   let ties = 0
   games.games.forEach(function (ele) {
     if (checkWin(ele.cells)) {
-      console.log(ele.cells[threeInARow[checkWin(ele.cells)][0]])
       if (ele.cells[threeInARow[checkWin(ele.cells)][0]] === 'x') {
         wins++
       } else if (ele.cells[threeInARow[checkWin(ele.cells)][0]] === 'o') {
@@ -114,7 +112,6 @@ const showRecord = games => {
     }
   })
   const total = wins + losses + ties
-  console.log(wins, losses, ties)
   updateUserMessage(`Total: ${total} - Wins: ${wins} - Losses: ${losses} - Ties: ${ties}`)
 }
 
@@ -126,7 +123,6 @@ const getGames = () => {
 }
 
 const resetGame = () => {
-  console.log(store)
   updateUserMessage('New game!')
   $('.col-sm').html('')
   cells = ['', '', '', '', '', '', '', '', '']
