@@ -50,7 +50,7 @@ const onChangePasswordSuccess = () => {
 
 const onChangePasswordFailure = () => {
   $('form').trigger('reset')
-  $('#upper-left').text('Please try to change your password again')
+  $('#upper-left').text('Please try again')
 }
 
 module.exports = {
