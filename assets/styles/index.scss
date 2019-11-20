@@ -2,7 +2,7 @@
 
 body {
   text-align: center;
-  background-color: lightblue;
+  background-color: #b3e0ff;
 }
 
 .container {
@@ -10,8 +10,17 @@ body {
   border: 0;
 }
 
+h1 {
+  font-family: monospace;
+  font-size: 50px
+}
+
+h2 {
+  font-family: monospace;
+}
+
 div {
-  background-color: green;
+  background-color: #ccffcc;
   border: 2px black solid;
   line-height: 190px;
   height: 190px;

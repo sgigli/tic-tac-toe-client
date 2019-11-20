@@ -17,7 +17,7 @@ const onSignUpSuccess = () => {
 }
 
 const onSignUpFailure = () => {
-  onFailure('Please try to sign up again.')
+  onFailure('Please try again.')
 }
 
 const onSignInSuccess = responseData => {

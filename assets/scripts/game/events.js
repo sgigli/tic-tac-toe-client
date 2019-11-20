@@ -2,6 +2,7 @@
 
 const api = require('./api')
 const ui = require('./ui')
+const store = require('../store')
 
 const threeInARow = {
   row1: [0, 1, 2],
@@ -66,6 +67,7 @@ const addLetterToApi = (id, currentPlayer, over) => {
 }
 
 const addLetter = event => {
+  console.log(cells)
   if (spaceIsEmpty(event)) {
     updateUserMessage(' ')
     insertLetter(event)
@@ -111,8 +113,9 @@ const showRecord = games => {
       ties++
     }
   })
+  const total = wins + losses + ties
   console.log(wins, losses, ties)
-  updateUserMessage(`Wins: ${wins} -- Losses: ${losses} -- Ties: ${ties}`)
+  updateUserMessage(`Total: ${total} - Wins: ${wins} - Losses: ${losses} - Ties: ${ties}`)
 }
 
 const getGames = () => {
@@ -123,12 +126,14 @@ const getGames = () => {
 }
 
 const resetGame = () => {
+  console.log(store)
   updateUserMessage('New game!')
   $('.col-sm').html('')
   cells = ['', '', '', '', '', '', '', '', '']
   currentPlayer = 'X'
   over = false
   updateCurrentPlayerMessage()
+  $('.col-sm').off('click', addLetter)
   createGame()
 }
 

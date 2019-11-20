@@ -1,5 +1,5 @@
 ## Technologies used
-GIT, GitHub, Bootstrap, local APIs
+GIT, GitHub, Bootstrap, API
 
 ## Planning and execution
 To start, I wrote down user stories and drew a wireframe
@@ -12,26 +12,13 @@ writing from separate linked files for organzation, and registering its
 responses in places that best fit with the game logic.
 
 ## Unsolved problems
-How to register incomplete games
+- How to register incomplete games
+- How to sign in, after signing out mid-game, and have the game re-started
+- Implementing more engaging styling
+- Making more responsive to window re-sizing
 
 ## Wireframe
 https://imgur.com/a/QCCycoz
 
 ## User Story:
-As unregistered user, I would ike to sign up with email, pw, and pwc:
-- if email is taken then show error message
-- if pw and pwc dont match then show error message
-- if email is valid and pw and pwc match then show success message
-
-As a registered, logged Out User, I would like the option to sign in:
-- I am notified if I mistype my username or pw
-
-As a logged in user, I want to play tic tac toe:
-
-- click a button "Start Game" and the gameboard should appear
-- first player should be able to add an x to a spot on the board
-- turn should rotate x and o
-- player should not be able to select a taken spot
-- want to be notified after clicks
-- want to be able to see a record of my games
-- want to be able to reset the game
+https://imgur.com/a/ADNTA5y
