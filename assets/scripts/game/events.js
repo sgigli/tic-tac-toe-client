@@ -2,7 +2,7 @@
 
 const api = require('./api')
 const ui = require('./ui')
-const store = require('../store')
+// const store = require('../store')
 
 const threeInARow = {
   row1: [0, 1, 2],
@@ -15,7 +15,7 @@ const threeInARow = {
   dia2: [2, 4, 6]
 }
 
-const checkWin = (cells) => {
+const checkWin = cells => {
   return Object.keys(threeInARow).find(e =>
     cells[threeInARow[e][0]] &&
     cells[threeInARow[e][0]] === cells[threeInARow[e][1]] &&
@@ -42,7 +42,7 @@ const gridIsEmpty = () => {
 
 const dontAllowMoreLetters = () => {
   $('.col-sm').off('click', addLetter)
-  $('#play').off('click', createGame)
+  $('#play').off('click', newGame)
   over = true
 }
 
@@ -88,14 +88,6 @@ const addLetter = event => {
   }
 }
 
-const createGame = () => {
-  updateUserMessage('New game!')
-  $('.col-sm').on('click', addLetter)
-  api.create()
-    .then(ui.onCreateSuccess)
-    .catch(ui.onCreateFailure)
-}
-
 const showRecord = games => {
   let wins = 0
   let losses = 0
@@ -118,27 +110,39 @@ const showRecord = games => {
 const getGames = () => {
   api.getGames()
     .then(showRecord)
-    .then(ui.onGetGamesSuccess) // responseData is not getting to onGetGamesSuccess ??
+    .then(ui.onGetGamesSuccess)
     .catch(ui.onGetGamesFailure)
 }
 
-const resetGame = () => {
+const newGame = () => {
   updateUserMessage('New game!')
   $('.col-sm').html('')
+  $('.col-sm').on('click', addLetter)
   cells = ['', '', '', '', '', '', '', '', '']
   currentPlayer = 'X'
   over = false
   updateCurrentPlayerMessage()
+  api.create()
+    .then(ui.onCreateSuccess)
+    .catch(ui.onCreateFailure)
+}
+
+const signOutReset = () => {
+  updateUserMessage('')
+  $('.col-sm').html('')
   $('.col-sm').off('click', addLetter)
-  createGame()
+  cells = ['', '', '', '', '', '', '', '', '']
+  currentPlayer = 'X'
+  over = false
+  updateCurrentPlayerMessage()
 }
 
 const addHandlers = () => {
-  $('#play').on('click', createGame)
+  $('#newGame').on('click', newGame)
   $('#getGames').on('click', getGames)
-  $('#reset').on('click', resetGame)
 }
 
 module.exports = {
-  addHandlers
+  addHandlers,
+  signOutReset
 }

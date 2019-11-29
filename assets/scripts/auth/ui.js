@@ -1,6 +1,7 @@
 'use strict'
 
 const store = require('../store')
+const gameEvents = require('../game/events')
 
 const onSuccess = message => {
   $('#message').text(message)
@@ -22,7 +23,7 @@ const onSignUpFailure = () => {
 
 const onSignInSuccess = responseData => {
   store.user = responseData.user
-  console.log(store)
+  // console.log(store)
   $('#upper-left').text('You successfully signed in!')
   $('.after-auth').show()
   $('.before-auth').hide()
@@ -34,6 +35,7 @@ const onSignInFailure = () => {
 
 const onSignOutSuccess = () => {
   store.user = {}
+  gameEvents.signOutReset()
   onSuccess('You successfully signed out!')
   $('.before-auth').show()
   $('.after-auth').hide()
