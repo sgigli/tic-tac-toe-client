@@ -11,6 +11,19 @@ const signUp = formData => {
   })
 }
 
+const demoSignIn = () => {
+  return $.ajax({
+    url: config.apiUrl + '/sign-in',
+    method: 'POST',
+    data: {
+      "credentials": {
+        "email": "user@user.com",
+        "password": "1"
+      }
+    }
+  })
+}
+
 const signIn = formData => {
   return $.ajax({
     url: config.apiUrl + '/sign-in',
@@ -44,5 +57,6 @@ module.exports = {
   signUp,
   signIn,
   signOut,
-  changePassword
+  changePassword,
+  demoSignIn
 }
