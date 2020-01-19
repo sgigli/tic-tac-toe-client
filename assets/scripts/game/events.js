@@ -103,19 +103,20 @@ const addLetter = event => {
 }
 
 const computerMove = () => {
-  const resO = twoInRow('O')
-  const resX = twoInRow('X')
-  if (resO) {
-    const index = threeInARow[resO].find(i => cells[i] === '')
+  const twoO = twoInRow('O')
+  const twoX = twoInRow('X')
+  // const oneO = oneInRow('O')
+  if (twoO) {
+    const index = threeInARow[twoO].find(i => cells[i] === '')
     computerInsertLetter(index)
-  } else if (resX) {
-    const index = threeInARow[resX].find(i => cells[i] === '')
+  } else if (twoX) {
+    const index = threeInARow[twoX].find(i => cells[i] === '')
     computerInsertLetter(index)
   }
 }
 
 const computerInsertLetter = (index) => {
-  if (index) {
+  if (index || index === 0) {
     $(`#${index}`).html('O')
   }
 }
@@ -150,10 +151,8 @@ let computer
 const newGame = () => {
   const opponent = document.getElementById('dropdown').value
   if (opponent === 'player 2') {
-    // player2NewGame()
     computer = false
   } else if (opponent === 'computer') {
-    // computerNewGame()
     computer = true
   }
   updateUserMessage('New game!')
