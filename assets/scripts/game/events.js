@@ -23,6 +23,17 @@ const checkWin = cells => {
   )
 }
 
+const twoInRow = (letter) => {
+  return Object.keys(threeInARow).find(e =>
+    (cells[threeInARow[e][0]] === letter && !cells[threeInARow[e][2]] &&
+    cells[threeInARow[e][0]] === cells[threeInARow[e][1]]) ||
+    (cells[threeInARow[e][0]] === letter && !cells[threeInARow[e][1]] &&
+    cells[threeInARow[e][0]] === cells[threeInARow[e][2]]) ||
+    (cells[threeInARow[e][1]] === letter && !cells[threeInARow[e][0]] &&
+    cells[threeInARow[e][1]] === cells[threeInARow[e][2]])
+  )
+}
+
 const spaceIsEmpty = event => {
   return !$(event.target).html()
 }
@@ -83,8 +94,29 @@ const addLetter = event => {
       updateCurrentPlayer()
       updateCurrentPlayerMessage()
     }
+    if (computer) {
+      computerMove()
+    }
   } else {
     updateUserMessage('Please select another space')
+  }
+}
+
+const computerMove = () => {
+  const resO = twoInRow('O')
+  const resX = twoInRow('X')
+  if (resO) {
+    const index = threeInARow[resO].find(i => cells[i] === '')
+    computerInsertLetter(index)
+  } else if (resX) {
+    const index = threeInARow[resX].find(i => cells[i] === '')
+    computerInsertLetter(index)
+  }
+}
+
+const computerInsertLetter = (index) => {
+  if (index) {
+    $(`#${index}`).html('O')
   }
 }
 
@@ -114,7 +146,16 @@ const getGames = () => {
     .catch(ui.onGetGamesFailure)
 }
 
-const player2NewGame = () => {
+let computer
+const newGame = () => {
+  const opponent = document.getElementById('dropdown').value
+  if (opponent === 'player 2') {
+    // player2NewGame()
+    computer = false
+  } else if (opponent === 'computer') {
+    // computerNewGame()
+    computer = true
+  }
   updateUserMessage('New game!')
   $('.col-sm').html('')
   $('.col-sm').on('click', addLetter)
@@ -126,22 +167,6 @@ const player2NewGame = () => {
     .then(ui.onCreateSuccess)
     .catch(ui.onCreateFailure)
 }
-
-const computerNewGame = () => {
-
-}
-
-const newGame = () => {
-  console.log(document.getElementById('dropdown').value)
-  const opponent = document.getElementById('dropdown').value
-  if (opponent === 'player 2') {
-    player2NewGame()
-  } else if (opponent === 'computer') {
-    computerNewGame()
-  }
-}
-
-
 
 const signOutReset = () => {
   updateUserMessage('')
