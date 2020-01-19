@@ -114,7 +114,7 @@ const getGames = () => {
     .catch(ui.onGetGamesFailure)
 }
 
-const newGame = () => {
+const player2NewGame = () => {
   updateUserMessage('New game!')
   $('.col-sm').html('')
   $('.col-sm').on('click', addLetter)
@@ -126,6 +126,22 @@ const newGame = () => {
     .then(ui.onCreateSuccess)
     .catch(ui.onCreateFailure)
 }
+
+const computerNewGame = () => {
+
+}
+
+const newGame = () => {
+  console.log(document.getElementById('dropdown').value)
+  const opponent = document.getElementById('dropdown').value
+  if (opponent === 'player 2') {
+    player2NewGame()
+  } else if (opponent === 'computer') {
+    computerNewGame()
+  }
+}
+
+
 
 const signOutReset = () => {
   updateUserMessage('')
