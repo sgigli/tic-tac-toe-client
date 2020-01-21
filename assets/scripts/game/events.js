@@ -61,6 +61,7 @@ const gridIsEmpty = () => {
 
 const dontAllowMoreLetters = () => {
   $('.col-sm').off('click', addLetter)
+  console.log(cells)
   over = true
 }
 
@@ -79,6 +80,8 @@ $('#currentPlayer').text('X')
 let over = false
 
 const addLetterToApi = (id, currentPlayer, over) => {
+  console.log(id, currentPlayer, over)
+  console.log(typeof currentPlayer)
   api.addLetter(id, currentPlayer, over)
     .then(ui.onAddLetterSuccess)
     .catch(ui.onAddLetterFailure)
@@ -99,7 +102,7 @@ const addLetter = event => {
     } else {
       addLetterToApi(event.target.id, currentPlayer.toLowerCase(), over)
       if (computer) {
-        computerMove()
+        setTimeout(computerMove, 400)
       } else {
         updateCurrentPlayer()
         updateCurrentPlayerMessage()
@@ -132,7 +135,15 @@ const computerMove = () => {
     computerInsertLetter(index)
     addLetterToApi(index, 'o', over)
   } else {
-    const index = Math.floor(Math.random() * 10)
+    let check = true
+    let index
+    while (check) {
+      index = Math.floor(Math.random() * 9)
+      if ($(`#${index}`).html()) {
+      } else {
+        check = false
+      }
+    }
     computerInsertLetter(index)
     addLetterToApi(index, 'o', over)
   }
