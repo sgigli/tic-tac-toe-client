@@ -82,7 +82,7 @@ let over = false
 const addLetterToApi = (id, currentPlayer, over) => {
   console.log(id, currentPlayer, over)
   console.log(typeof currentPlayer)
-  api.addLetter(id, currentPlayer, over)
+  return api.addLetter(id, currentPlayer, over)
     .then(ui.onAddLetterSuccess)
     .catch(ui.onAddLetterFailure)
 }
@@ -101,12 +101,14 @@ const addLetter = event => {
       addLetterToApi(event.target.id, currentPlayer.toLowerCase(), over)
     } else {
       addLetterToApi(event.target.id, currentPlayer.toLowerCase(), over)
-      if (computer) {
-        setTimeout(computerMove, 400)
-      } else {
-        updateCurrentPlayer()
-        updateCurrentPlayerMessage()
-      }
+        .then(() => {
+          if (computer) {
+            setTimeout(computerMove, 400)
+          } else {
+            updateCurrentPlayer()
+            updateCurrentPlayerMessage()
+          }
+        })
     }
   } else {
     updateUserMessage('Please select another space')
